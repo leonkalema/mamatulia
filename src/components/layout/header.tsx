@@ -44,12 +44,11 @@ export function Header() {
       <nav className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/images/logo.png"
+            src="/images/mama.png"
             alt="Mama Tulia"
-            width={44}
-            height={44}
-            className="h-11 w-11 transition-all"
-            style={!useDarkText ? { mixBlendMode: "screen" } : undefined}
+            width={56}
+            height={56}
+            className="h-14 w-14"
             priority
           />
         </Link>
