@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, BookOpen, Home as HomeIcon, HandHeart, Briefcase } from "lucide-react";
+import { FadeIn } from "@/components/ui/fade-in";
 import type { LucideIcon } from "lucide-react";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { ImpactStat, ProgramCard, DonationModule, CTABanner } from "@/components/brand";
@@ -101,18 +102,25 @@ export default async function Home() {
         <div className="container relative z-10 mx-auto flex min-h-screen flex-col justify-end px-4 pb-20 pt-32 md:justify-center md:pb-0 md:pt-20">
           <div className="max-w-xl">
             {hero?.tagline && (
-              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
-                {hero.tagline}
-              </p>
+              <FadeIn delay={0.1} direction="up">
+                <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+                  {hero.tagline}
+                </p>
+              </FadeIn>
             )}
-            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl lg:text-7xl">
-              {hero?.headline || "Every preemie deserves a fighting chance"}
-            </h1>
+            <FadeIn delay={0.2} direction="up">
+              <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl lg:text-7xl">
+                {hero?.headline || "Every preemie deserves a fighting chance"}
+              </h1>
+            </FadeIn>
             {hero?.subtext && (
-              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
-                {hero.subtext}
-              </p>
+              <FadeIn delay={0.35} direction="up">
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+                  {hero.subtext}
+                </p>
+              </FadeIn>
             )}
+            <FadeIn delay={0.5} direction="up">
             <div className="mt-10 flex flex-wrap items-center gap-8">
               {/* Primary CTA — Contentful or fallback to Donate */}
               {hero?.primaryButtonText && hero.primaryButtonUrl ? (
@@ -171,6 +179,7 @@ export default async function Home() {
                 </Link>
               )}
             </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -179,8 +188,10 @@ export default async function Home() {
       <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
-            {impactStats.map((stat) => (
-              <ImpactStat key={stat.label} value={stat.value} label={stat.label} />
+            {impactStats.map((stat, i) => (
+              <FadeIn key={stat.label} delay={i * 0.1} direction="up">
+                <ImpactStat value={stat.value} label={stat.label} />
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -194,33 +205,36 @@ export default async function Home() {
       {/* Programs — left-offset heading, taller cards */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--brand-accent)]">
-                What We Do
-              </p>
-              <h2 className="mt-3 font-serif text-3xl font-light leading-tight md:text-4xl">
-                Programs that save lives
-              </h2>
+          <FadeIn direction="up">
+            <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--brand-accent)]">
+                  What We Do
+                </p>
+                <h2 className="mt-3 font-serif text-3xl font-light leading-tight md:text-4xl">
+                  Programs that save lives
+                </h2>
+              </div>
+              <Link
+                href="/programs"
+                className="text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline md:mb-1"
+              >
+                View all programs
+              </Link>
             </div>
-            <Link
-              href="/programs"
-              className="text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline md:mb-1"
-            >
-              View all programs
-            </Link>
-          </div>
+          </FadeIn>
           <div className="grid gap-4 md:grid-cols-3">
             {corePrograms.map((program, i) => (
-              <ProgramCard
-                key={program.slug}
-                title={program.name}
-                description={program.summary}
-                href={`/programs/${program.slug}`}
-                icon={PROGRAM_ICONS[program.slug]}
-                imageUrl={getAssetUrl(program.image)}
-                color={CARD_COLORS[i % CARD_COLORS.length]}
-              />
+              <FadeIn key={program.slug} delay={i * 0.12} direction="up">
+                <ProgramCard
+                  title={program.name}
+                  description={program.summary}
+                  href={`/programs/${program.slug}`}
+                  icon={PROGRAM_ICONS[program.slug]}
+                  imageUrl={getAssetUrl(program.image)}
+                  color={CARD_COLORS[i % CARD_COLORS.length]}
+                />
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -229,7 +243,8 @@ export default async function Home() {
       {/* Featured Story + Donation — asymmetric 60/40, no background */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="grid gap-16 lg:grid-cols-[3fr_2fr] lg:gap-20">
+          <FadeIn direction="up">
+            <div className="grid gap-16 lg:grid-cols-[3fr_2fr] lg:gap-20">
             {/* Featured Story */}
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--brand-accent)]">
@@ -265,7 +280,8 @@ export default async function Home() {
             <div className="flex items-start pt-0 lg:pt-16">
               <DonationModule className="w-full" />
             </div>
-          </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
