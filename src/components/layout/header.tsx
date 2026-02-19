@@ -105,7 +105,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="block rounded-md px-3 py-3 text-base font-medium text-foreground hover:bg-secondary"
+              className="block rounded-md px-3 py-3 text-base font-small text-foreground hover:bg-secondary"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
