@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Heart, Users, Baby, BookOpen, Home as HomeIcon, HandHeart, Briefcase } from "lucide-react";
+import { Heart, BookOpen, Home as HomeIcon, HandHeart, Briefcase } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { ImpactStat, ProgramCard, DonationModule, CTABanner } from "@/components/brand";
@@ -10,10 +9,10 @@ import { StoryCard } from "@/components/brand/story-card";
 import type { WpArticle, MamatuliaProgram, MamatuliaPartner, HomepageHero } from "@/types/contentful";
 
 const impactStats = [
-  { value: "31,200+", label: "Home visits & outreaches", icon: Heart },
-  { value: "1,600", label: "Preemie kits distributed", icon: Baby },
-  { value: "11,500", label: "Mothers supported", icon: Users },
-  { value: "6,450", label: "Trainings delivered", icon: BookOpen },
+  { value: "31,200+", label: "Home visits & outreaches" },
+  { value: "1,600", label: "Preemie kits distributed" },
+  { value: "11,500", label: "Mothers supported" },
+  { value: "6,450", label: "Trainings delivered" },
 ] as const;
 
 const PROGRAM_ICONS: Record<string, LucideIcon> = {
@@ -25,9 +24,9 @@ const PROGRAM_ICONS: Record<string, LucideIcon> = {
 };
 
 const CARD_COLORS = [
-  "bg-[var(--brand-tan)]",
-  "bg-[var(--brand-earth)]",
-  "bg-[var(--brand-earth-dark)]",
+  "bg-[var(--brand-ink-soft)]",
+  "bg-[var(--brand-ink)]",
+  "bg-[var(--brand-accent)]",
 ] as const;
 
 const getAssetUrl = (asset: unknown): string | null => {
@@ -82,103 +81,136 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative min-h-[85vh] bg-[var(--brand-earth)] pt-20">
+      {/* Hero — editorial: image fills viewport, type panel overlaps from left */}
+      <section className="relative min-h-screen bg-[var(--brand-ink)]">
         {heroImageUrl ? (
           <>
             <Image
               src={heroImageUrl}
               alt={hero?.headline || ""}
               fill
-              className="object-cover"
+              className="object-cover opacity-60"
               priority
               sizes="100vw"
             />
-            <div className="absolute inset-0 z-0 bg-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
           </>
         ) : (
-          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[var(--brand-earth-dark)] via-[var(--brand-earth)] to-[var(--brand-tan)]/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-ink)] via-[var(--brand-ink-soft)] to-[var(--brand-ink-soft)]/60" />
         )}
-        <div className="container relative z-10 mx-auto flex min-h-[85vh] flex-col justify-center px-4 py-24">
-          <div className="max-w-2xl">
+        <div className="container relative z-10 mx-auto flex min-h-screen flex-col justify-end px-4 pb-20 pt-32 md:justify-center md:pb-0 md:pt-20">
+          <div className="max-w-xl">
             {hero?.tagline && (
-              <p className="text-sm font-medium uppercase tracking-wider text-white/70">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
                 {hero.tagline}
               </p>
             )}
-            <h1 className="mt-4 font-serif text-4xl font-normal leading-[1.1] text-white md:text-5xl lg:text-6xl">
+            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl lg:text-7xl">
               {hero?.headline || "Every preemie deserves a fighting chance"}
             </h1>
             {hero?.subtext && (
-              <p className="mt-6 max-w-lg text-lg text-white/80">
+              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
                 {hero.subtext}
               </p>
             )}
-            <div className="mt-10 flex flex-wrap gap-4">
-              {hero?.primaryButtonText && hero.primaryButtonUrl && (
-                <Button asChild size="lg" className="rounded-full px-8 text-base">
-                  {isExternalUrl(hero.primaryButtonUrl) ? (
-                    <a href={hero.primaryButtonUrl} target="_blank" rel="noopener noreferrer">
-                      {hero.primaryButtonText}
-                    </a>
-                  ) : (
-                    <Link href={hero.primaryButtonUrl}>{hero.primaryButtonText}</Link>
-                  )}
-                </Button>
-              )}
-              {hero?.secondaryButtonText && hero.secondaryButtonUrl && (
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/30 bg-white/10 px-8 text-base text-white backdrop-blur-sm hover:bg-white hover:text-foreground"
+            <div className="mt-10 flex flex-wrap items-center gap-8">
+              {/* Primary CTA — Contentful or fallback to Donate */}
+              {hero?.primaryButtonText && hero.primaryButtonUrl ? (
+                isExternalUrl(hero.primaryButtonUrl) ? (
+                  <a
+                    href={hero.primaryButtonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-b-2 border-white pb-0.5 text-base font-medium text-white transition-colors hover:border-white/50 hover:text-white/70"
+                  >
+                    {hero.primaryButtonText}
+                  </a>
+                ) : (
+                  <Link
+                    href={hero.primaryButtonUrl}
+                    className="border-b-2 border-white pb-0.5 text-base font-medium text-white transition-colors hover:border-white/50 hover:text-white/70"
+                  >
+                    {hero.primaryButtonText}
+                  </Link>
+                )
+              ) : (
+                <a
+                  href={EXTERNAL_LINKS.DONATE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-b-2 border-white pb-0.5 text-base font-medium text-white transition-colors hover:border-white/50 hover:text-white/70"
                 >
-                  {isExternalUrl(hero.secondaryButtonUrl) ? (
-                    <a href={hero.secondaryButtonUrl} target="_blank" rel="noopener noreferrer">
-                      {hero.secondaryButtonText}
-                    </a>
-                  ) : (
-                    <Link href={hero.secondaryButtonUrl}>{hero.secondaryButtonText}</Link>
-                  )}
-                </Button>
+                  Give a Preemie Kit
+                </a>
+              )}
+              {/* Secondary CTA — Contentful or fallback to Programs */}
+              {hero?.secondaryButtonText && hero.secondaryButtonUrl ? (
+                isExternalUrl(hero.secondaryButtonUrl) ? (
+                  <a
+                    href={hero.secondaryButtonUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-base text-white/50 transition-colors hover:text-white/80"
+                  >
+                    {hero.secondaryButtonText}
+                  </a>
+                ) : (
+                  <Link
+                    href={hero.secondaryButtonUrl}
+                    className="text-base text-white/50 transition-colors hover:text-white/80"
+                  >
+                    {hero.secondaryButtonText}
+                  </Link>
+                )
+              ) : (
+                <Link
+                  href="/programs"
+                  className="text-base text-white/50 transition-colors hover:text-white/80"
+                >
+                  Our programs
+                </Link>
               )}
             </div>
           </div>
         </div>
-        {/* Curved divider */}
-        <div className="absolute bottom-0 left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 80" fill="none" className="w-full" preserveAspectRatio="none">
-            <path d="M0 80L1440 80L1440 40C1200 70 960 80 720 80C480 80 240 70 0 40L0 80Z" fill="var(--brand-beige)" />
-          </svg>
-        </div>
       </section>
 
-      {/* Impact Stats */}
-      <section className="bg-secondary py-12 md:py-16">
+      {/* Impact Stats — editorial, left-aligned, no background */}
+      <section className="py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
             {impactStats.map((stat) => (
-              <ImpactStat key={stat.label} value={stat.value} label={stat.label} icon={stat.icon} />
+              <ImpactStat key={stat.label} value={stat.value} label={stat.label} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Programs */}
+      {/* Thin rule */}
+      <div className="container mx-auto px-4">
+        <div className="h-px bg-[var(--brand-rule)]" />
+      </div>
+
+      {/* Programs — left-offset heading, taller cards */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl">
-            <p className="text-sm font-medium uppercase tracking-wider text-primary">
-              What We Do
-            </p>
-            <h2 className="mt-2 font-serif text-3xl font-normal md:text-4xl">
-              Programs that save lives
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              From hospital bedsides to home visits, we provide comprehensive support for preemie mothers and their babies.
-            </p>
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--brand-accent)]">
+                What We Do
+              </p>
+              <h2 className="mt-3 font-serif text-3xl font-light leading-tight md:text-4xl">
+                Programs that save lives
+              </h2>
+            </div>
+            <Link
+              href="/programs"
+              className="text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline md:mb-1"
+            >
+              View all programs
+            </Link>
           </div>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3">
             {corePrograms.map((program, i) => (
               <ProgramCard
                 key={program.slug}
@@ -194,20 +226,20 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Story + Donation */}
-      <section className="bg-secondary py-20 md:py-28">
+      {/* Featured Story + Donation — asymmetric 60/40, no background */}
+      <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+          <div className="grid gap-16 lg:grid-cols-[3fr_2fr] lg:gap-20">
             {/* Featured Story */}
             <div>
-              <p className="text-sm font-medium uppercase tracking-wider text-primary">
+              <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--brand-accent)]">
                 Stories of Hope
               </p>
-              <h2 className="mt-2 font-serif text-3xl font-normal md:text-4xl">
+              <h2 className="mt-3 font-serif text-3xl font-light leading-tight md:text-4xl">
                 Meet the mothers we serve
               </h2>
               {featuredStory ? (
-                <div className="mt-8">
+                <div className="mt-10">
                   <StoryCard
                     title={featuredStory.title}
                     slug={featuredStory.slug}
@@ -223,76 +255,80 @@ export default async function Home() {
               )}
               <Link
                 href="/news"
-                className="mt-6 inline-flex items-center text-sm font-medium text-primary hover:underline"
+                className="mt-8 inline-block text-sm text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
               >
-                Read all stories →
+                Read all stories
               </Link>
             </div>
 
             {/* Donation Module */}
-            <div className="flex items-center">
+            <div className="flex items-start pt-0 lg:pt-16">
               <DonationModule className="w-full" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
-          <p className="mx-auto max-w-2xl font-serif text-xl leading-relaxed text-foreground/80 md:text-2xl">
+      {/* Mission Statement — left-aligned, large */}
+      <div className="container mx-auto px-4">
+        <div className="h-px bg-[var(--brand-rule)]" />
+      </div>
+      <section className="py-16 md:py-20">
+        <div className="container mx-auto px-4">
+          <p className="max-w-3xl font-serif text-2xl font-light leading-[1.5] text-foreground/70 md:text-3xl">
             &ldquo;By God&apos;s grace, we support mothers, save lives, and strengthen faith.&rdquo;
           </p>
         </div>
       </section>
 
-      {/* Partners */}
-      <section className="border-t py-12">
-        <div className="container mx-auto px-4">
-          <p className="mb-6 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Trusted Partners
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-            {partners.map((partner) => {
-              const logoUrl = getAssetUrl(partner.logo);
-              if (!logoUrl) return null;
-              const wrapper = partner.website ? (
-                <a
-                  key={partner.slug}
-                  href={partner.website}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative h-10 w-24 opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0 md:h-12 md:w-32"
-                  title={partner.name}
-                >
-                  <Image
-                    src={logoUrl}
-                    alt={partner.name}
-                    fill
-                    className="object-contain"
-                    sizes="128px"
-                  />
-                </a>
-              ) : (
-                <div
-                  key={partner.slug}
-                  className="relative h-10 w-24 opacity-60 grayscale md:h-12 md:w-32"
-                  title={partner.name}
-                >
-                  <Image
-                    src={logoUrl}
-                    alt={partner.name}
-                    fill
-                    className="object-contain"
-                    sizes="128px"
-                  />
-                </div>
-              );
-              return wrapper;
-            })}
+      {/* Partners — no border-top, just spacing */}
+      {partners.length > 0 && (
+        <section className="pb-16">
+          <div className="container mx-auto px-4">
+            <p className="mb-8 text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+              Trusted Partners
+            </p>
+            <div className="flex flex-wrap items-center gap-10 md:gap-14">
+              {partners.map((partner) => {
+                const logoUrl = getAssetUrl(partner.logo);
+                if (!logoUrl) return null;
+                return partner.website ? (
+                  <a
+                    key={partner.slug}
+                    href={partner.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative h-8 w-20 opacity-40 grayscale transition-all duration-[var(--duration-normal)] hover:opacity-80 hover:grayscale-0 md:h-10 md:w-28"
+                    title={partner.name}
+                  >
+                    <Image
+                      src={logoUrl}
+                      alt={partner.name}
+                      fill
+                      className="object-contain"
+                      sizes="112px"
+                    />
+                  </a>
+                ) : (
+                  <div
+                    key={partner.slug}
+                    className="relative h-8 w-20 opacity-40 grayscale md:h-10 md:w-28"
+                    title={partner.name}
+                  >
+                    <Image
+                      src={logoUrl}
+                      alt={partner.name}
+                      fill
+                      className="object-contain"
+                      sizes="112px"
+                    />
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <CTABanner

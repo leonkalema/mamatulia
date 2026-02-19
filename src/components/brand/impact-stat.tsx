@@ -8,18 +8,16 @@ type ImpactStatProps = {
   readonly className?: string;
 };
 
-export function ImpactStat({ value, label, icon: Icon, className }: ImpactStatProps) {
+export function ImpactStat({ value, label, className }: ImpactStatProps) {
   return (
-    <div className={cn("text-center", className)}>
-      {Icon && (
-        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-          <Icon className="h-6 w-6 text-primary" />
-        </div>
-      )}
-      <p className="font-serif text-3xl font-normal text-foreground md:text-4xl">
+    <div className={cn("group", className)}>
+      <div className="mb-4 h-px w-8 bg-[var(--brand-accent)]" />
+      <p className="font-serif text-4xl font-light leading-none text-foreground md:text-5xl">
         {value}
       </p>
-      <p className="mt-1 text-sm text-muted-foreground">{label}</p>
+      <p className="mt-3 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </p>
     </div>
   );
 }

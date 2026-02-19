@@ -52,32 +52,28 @@ export default async function StoriesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] bg-[var(--brand-earth)] pt-20">
+      <section className="relative min-h-[70vh] bg-[var(--brand-ink)] pt-20">
         <Image
           src="https://images.ctfassets.net/ld5lxu1wipv6/wpMedia-2416/1f24559e31ebb0432e129a604a01046a/IMG_4143-scaled.jpg"
           alt="Stories of Hope"
           fill
-          className="object-cover"
+          className="object-cover opacity-60"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 z-0 bg-black/50" />
-        <div className="container relative z-10 mx-auto flex min-h-[60vh] flex-col justify-center px-4 py-20 md:py-28">
-          <p className="text-sm font-medium uppercase tracking-wider text-white/70">
-            Stories of Hope
-          </p>
-          <h1 className="mt-2 max-w-2xl font-serif text-4xl font-normal leading-tight text-white md:text-5xl lg:text-6xl">
-            Meet the mothers we serve
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-white/80">
-            Every story is a testament to resilience, hope, and the power of community support.
-          </p>
-        </div>
-        {/* Curved divider */}
-        <div className="absolute -bottom-px left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 60" fill="none" className="block w-full" preserveAspectRatio="none">
-            <path d="M0 60L1440 60L1440 30C1200 50 960 60 720 60C480 60 240 50 0 30L0 60Z" fill="white" />
-          </svg>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+        <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
+          <div className="max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+              Stories of Hope
+            </p>
+            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+              Meet the mothers we serve
+            </h1>
+            <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+              Every story is a testament to resilience, hope, and the power of community support.
+            </p>
+          </div>
         </div>
       </section>
 

@@ -63,40 +63,36 @@ export default async function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] bg-[var(--brand-earth)] pt-20">
+      <section className="relative min-h-[70vh] bg-[var(--brand-ink)] pt-20">
         {heroImageUrl ? (
           <>
             <Image
               src={heroImageUrl}
               alt={page.pageTitle}
               fill
-              className="object-cover"
+              className="object-cover opacity-60"
               priority
               sizes="100vw"
             />
-            <div className="absolute inset-0 z-0 bg-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
           </>
         ) : (
-          <div className="absolute inset-0 z-0 bg-gradient-to-br from-[var(--brand-earth-dark)] via-[var(--brand-earth)] to-[var(--brand-tan)]/30" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-ink)] via-[var(--brand-ink-soft)] to-[var(--brand-ink-soft)]/60" />
         )}
-        <div className="container relative z-10 mx-auto flex min-h-[60vh] flex-col justify-center px-4 py-20 md:py-28">
-          <p className="text-sm font-medium uppercase tracking-wider text-white/70">
-            Our Story
-          </p>
-          <h1 className="mt-2 max-w-2xl font-serif text-4xl font-normal leading-tight text-white md:text-5xl lg:text-6xl">
-            {page.pageTitle}
-          </h1>
-          {page.heroSubtitle && (
-            <p className="mt-6 max-w-xl text-lg text-white/80">
-              {page.heroSubtitle}
+        <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
+          <div className="max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+              Our Story
             </p>
-          )}
-        </div>
-        {/* Curved divider */}
-        <div className="absolute -bottom-px left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 60" fill="none" className="block w-full" preserveAspectRatio="none">
-            <path d="M0 60L1440 60L1440 30C1200 50 960 60 720 60C480 60 240 50 0 30L0 60Z" fill="var(--secondary)" />
-          </svg>
+            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+              {page.pageTitle}
+            </h1>
+            {page.heroSubtitle && (
+              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+                {page.heroSubtitle}
+              </p>
+            )}
+          </div>
         </div>
       </section>
 

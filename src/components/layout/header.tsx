@@ -37,27 +37,21 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
-        scrolled && "bg-white/95 shadow-sm backdrop-blur-sm"
+        "fixed left-0 right-0 top-0 z-50 transition-all duration-[var(--duration-normal)]",
+        scrolled && "bg-[var(--brand-surface)]/96 backdrop-blur-sm border-b border-[var(--brand-rule)]"
       )}
     >
       <nav className="container mx-auto flex h-20 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <span
-            className={cn(
-              "inline-flex items-center justify-center rounded-full p-1 transition-all",
-              useDarkText ? "bg-transparent" : "bg-white/95 shadow-sm"
-            )}
-          >
-            <Image
-              src="/images/Logo-Mamatulia-final.png"
-              alt="Mama Tulia"
-              width={44}
-              height={44}
-              className="h-11 w-11"
-              priority
-            />
-          </span>
+          <Image
+            src="/images/logo.png"
+            alt="Mama Tulia"
+            width={44}
+            height={44}
+            className="h-11 w-11 transition-all"
+            style={!useDarkText ? { mixBlendMode: "screen" } : undefined}
+            priority
+          />
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -66,54 +60,68 @@ export function Header() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors",
+                "relative text-sm transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:transition-all after:duration-[var(--duration-normal)] hover:after:w-full",
                 useDarkText
-                  ? "text-foreground/80 hover:text-foreground"
-                  : "text-white/90 hover:text-white"
+                  ? "text-foreground/70 hover:text-foreground after:bg-foreground"
+                  : "text-white/80 hover:text-white after:bg-white"
               )}
             >
               {item.label}
             </Link>
           ))}
-          <Button asChild className="rounded-full px-6">
-            <a href={EXTERNAL_LINKS.DONATE} target="_blank" rel="noopener noreferrer">Donate</a>
-          </Button>
+          <a
+            href={EXTERNAL_LINKS.DONATE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              "border px-5 py-2 text-sm font-medium transition-colors",
+              useDarkText
+                ? "border-foreground/20 text-foreground hover:border-foreground/50 hover:bg-foreground hover:text-background"
+                : "border-white/40 text-white hover:border-white hover:bg-white hover:text-foreground"
+            )}
+          >
+            Donate
+          </a>
         </div>
 
-        <Button
-          variant="ghost"
-          size="icon"
+        <button
+          type="button"
           className={cn(
-            "md:hidden",
+            "md:hidden p-2 transition-colors",
             useDarkText ? "text-foreground" : "text-white"
           )}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </Button>
+          {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </nav>
 
       <div
         className={cn(
-          "absolute left-0 right-0 top-20 bg-white shadow-lg md:hidden",
+          "absolute left-0 right-0 top-20 border-b border-[var(--brand-rule)] bg-[var(--brand-surface)] md:hidden",
           mobileMenuOpen ? "block" : "hidden"
         )}
       >
-        <div className="space-y-1 px-4 py-4">
+        <div className="px-6 py-6">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="block rounded-md px-3 py-3 text-base font-small text-foreground hover:bg-secondary"
+              className="block border-b border-[var(--brand-rule)] py-4 text-base text-foreground/70 transition-colors hover:text-foreground"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <Button asChild className="mt-4 w-full rounded-full">
-            <a href={EXTERNAL_LINKS.DONATE} target="_blank" rel="noopener noreferrer">Donate</a>
-          </Button>
+          <a
+            href={EXTERNAL_LINKS.DONATE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 block border border-foreground/20 px-5 py-3 text-center text-sm font-medium text-foreground transition-colors hover:bg-foreground hover:text-background"
+          >
+            Donate
+          </a>
         </div>
       </div>
     </header>

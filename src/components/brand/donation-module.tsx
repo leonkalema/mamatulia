@@ -39,7 +39,16 @@ export function DonationModule({
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
           <Heart className="h-5 w-5 text-primary" />
         </div>
-        <h3 className="font-serif text-xl font-normal">Give a Preemie Kit</h3>
+        <h3 className="font-serif text-xl font-normal">
+          <a
+            href="https://allegrosolutions.org/donate/MamaTulia001"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-primary"
+          >
+            Give a Preemie Kit
+          </a>
+        </h3>
       </div>
       <p className="mt-3 text-sm text-muted-foreground">
         Your gift provides essential supplies for premature babies and their mothers.

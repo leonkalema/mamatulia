@@ -42,31 +42,28 @@ export default async function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[50vh] bg-[var(--brand-earth)] pt-20">
+      <section className="relative min-h-[70vh] bg-[var(--brand-ink)] pt-20">
         <Image
           src="https://images.ctfassets.net/ld5lxu1wipv6/wpMedia-2189/36bb7122ca6eb653f2c07267046cfdd5/IMG_20180918_174706_4-scaled.jpg"
           alt="Contact Us"
           fill
-          className="object-cover"
+          className="object-cover opacity-60"
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 z-0 bg-black/50" />
-        <div className="container relative z-10 mx-auto flex min-h-[50vh] flex-col justify-center px-4 py-20 md:py-28">
-          <p className="text-sm font-medium uppercase tracking-wider text-white/70">
-            Get in Touch
-          </p>
-          <h1 className="mt-2 max-w-2xl font-serif text-4xl font-normal leading-tight text-white md:text-5xl lg:text-6xl">
-            Contact Us
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-white/80">
-            We&apos;d love to hear from you. Reach out with questions, partnership inquiries, or to learn more about supporting our mission.
-          </p>
-        </div>
-        <div className="absolute -bottom-px left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 60" fill="none" className="block w-full" preserveAspectRatio="none">
-            <path d="M0 60L1440 60L1440 30C1200 50 960 60 720 60C480 60 240 50 0 30L0 60Z" fill="white" />
-          </svg>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+        <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
+          <div className="max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+              Get in Touch
+            </p>
+            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+              Contact Us
+            </h1>
+            <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+              We&apos;d love to hear from you. Reach out with questions, partnership inquiries, or to learn more about supporting our mission.
+            </p>
+          </div>
         </div>
       </section>
 
