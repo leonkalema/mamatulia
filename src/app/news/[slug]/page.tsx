@@ -22,7 +22,25 @@ const joinHtml = (article: WpArticle): string => {
     article.bodyHtml3,
     article.bodyHtml4,
   ];
-  return chunks.filter((value) => typeof value === "string" && value.length > 0).join("");
+  return chunks.filter((value) => typeof value === "string" && value.length > 0).join(" ");
+};
+
+const sanitizeBody = (raw: string): string => {
+  if (raw.trim().startsWith("<")) return raw;
+  return raw
+    .replace(/!\[([^\]]*)\]\((\/\/[^)]+)\)/g, '\n\n<img src="https:$2" alt="$1" />\n\n')
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '\n\n<img src="$2" alt="$1" />\n\n')
+    .replace(/\.\s*__([^_]+)__/g, ".\n\n<h2>$1</h2>\n\n")
+    .replace(/__([^_]+)__/g, "\n\n<h2>$1</h2>\n\n")
+    .split(/\n\n+/)
+    .map((block) => {
+      const trimmed = block.trim();
+      if (!trimmed) return "";
+      if (/^<(h[1-6]|img|ul|ol|blockquote)/.test(trimmed)) return trimmed;
+      return `<p>${trimmed.replace(/\n/g, " ")}</p>`;
+    })
+    .filter(Boolean)
+    .join("\n");
 };
 
 const stripHtml = (html: string): string => html.replace(/<[^>]*>/g, "").trim();
@@ -94,7 +112,7 @@ export default async function ArticlePage({ params }: PageProps) {
     notFound();
   }
   const article: WpArticle = response.data;
-  const html: string = joinHtml(article);
+  const html: string = sanitizeBody(joinHtml(article));
   const imageUrl: string | null = getImageUrl(article);
   const authorName: string = article.author?.name || "Mama Tulia Ministries";
   const readingTime: number = getReadingTime(html);
