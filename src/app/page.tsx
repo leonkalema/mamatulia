@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import Link from "next/link";
 import Image from "next/image";
 import { Heart, BookOpen, Home as HomeIcon, HandHeart, Briefcase } from "lucide-react";
