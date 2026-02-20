@@ -5,6 +5,7 @@ import { getMamatuliaPrograms } from "@/services/contentful";
 import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import type { MamatuliaProgram } from "@/types/contentful";
 import { CTABanner } from "@/components/brand";
+import { FadeIn } from "@/components/ui/fade-in";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { Heart, Home, Users, BookOpen, Briefcase, HandHeart, Droplets, Eye, BookHeart } from "lucide-react";
 
@@ -83,15 +84,21 @@ export default async function ProgramsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
         <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
           <div className="max-w-xl">
-          <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
-            What We Do
-          </p>
-          <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
-            Our Programs
-          </h1>
-          <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
-            Comprehensive support for preemie mothers — from hospital to home and beyond.
-          </p>
+            <FadeIn delay={0.1} direction="up">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+                What We Do
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.2} direction="up">
+              <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+                Our Programs
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.35} direction="up">
+              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+                Comprehensive support for preemie mothers — from hospital to home and beyond.
+              </p>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -105,24 +112,27 @@ export default async function ProgramsPage() {
         return (
           <section key={category} className="py-16 md:py-24">
             <div className="container mx-auto px-4">
-              <div className="mb-12 text-center">
-                <p className="text-sm font-medium uppercase tracking-wider text-primary">
-                  {label}
-                </p>
-              </div>
+              <FadeIn direction="up">
+                <div className="mb-12 text-center">
+                  <p className="text-sm font-medium uppercase tracking-wider text-primary">
+                    {label}
+                  </p>
+                </div>
+              </FadeIn>
               <div className="space-y-16 md:space-y-24">
                 {categoryPrograms.map((program, index) => {
                   const IconComponent = PROGRAM_ICONS[program.slug] || DEFAULT_ICON;
                   const imageUrl = getImageUrl(program.image);
                   const isEven = index % 2 === 0;
                   return (
-                    <ProgramCard
-                      key={program.slug}
-                      program={program}
-                      imageUrl={imageUrl}
-                      icon={IconComponent}
-                      isEven={isEven}
-                    />
+                    <FadeIn key={program.slug} delay={0.1} direction="up">
+                      <ProgramCard
+                        program={program}
+                        imageUrl={imageUrl}
+                        icon={IconComponent}
+                        isEven={isEven}
+                      />
+                    </FadeIn>
                   );
                 })}
               </div>
