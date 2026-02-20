@@ -5,6 +5,7 @@ import { getAboutPage } from "@/services/contentful";
 import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import type { AboutPage } from "@/types/contentful";
 import { CTABanner, ImpactStat } from "@/components/brand";
+import { FadeIn } from "@/components/ui/fade-in";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { Heart, Users, Home, Baby } from "lucide-react";
 
@@ -81,16 +82,22 @@ export default async function AboutPage() {
         )}
         <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
           <div className="max-w-xl">
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
-              Our Story
-            </p>
-            <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
-              {page.pageTitle}
-            </h1>
-            {page.heroSubtitle && (
-              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
-                {page.heroSubtitle}
+            <FadeIn delay={0.1} direction="up">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+                Our Story
               </p>
+            </FadeIn>
+            <FadeIn delay={0.2} direction="up">
+              <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+                {page.pageTitle}
+              </h1>
+            </FadeIn>
+            {page.heroSubtitle && (
+              <FadeIn delay={0.35} direction="up">
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+                  {page.heroSubtitle}
+                </p>
+              </FadeIn>
             )}
           </div>
         </div>
@@ -101,8 +108,10 @@ export default async function AboutPage() {
         <section className="bg-secondary py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-              {stats.map((stat) => (
-                <ImpactStat key={stat.label} value={stat.value!} label={stat.label!} />
+              {stats.map((stat, i) => (
+                <FadeIn key={stat.label} delay={i * 0.1} direction="up">
+                  <ImpactStat value={stat.value!} label={stat.label!} />
+                </FadeIn>
               ))}
             </div>
           </div>
@@ -112,6 +121,7 @@ export default async function AboutPage() {
       {/* Mission Section */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
+          <FadeIn direction="up">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--brand-tan)]">
               <Image
@@ -140,6 +150,7 @@ export default async function AboutPage() {
               )}
             </div>
           </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -147,6 +158,7 @@ export default async function AboutPage() {
       {page.visionText && (
         <section className="bg-[var(--brand-beige)] py-16 md:py-24">
           <div className="container mx-auto px-4">
+            <FadeIn direction="up">
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-medium uppercase tracking-wider text-primary">
                 Our Vision
@@ -160,6 +172,7 @@ export default async function AboutPage() {
                 {page.visionText}
               </p>
             </div>
+            </FadeIn>
           </div>
         </section>
       )}
@@ -168,6 +181,7 @@ export default async function AboutPage() {
       {page.valuesText && (
         <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
+            <FadeIn direction="up">
             <div className="mx-auto max-w-3xl text-center">
               <p className="text-sm font-medium uppercase tracking-wider text-primary">
                 Our Values
@@ -181,6 +195,7 @@ export default async function AboutPage() {
                 {page.valuesText}
               </p>
             </div>
+            </FadeIn>
           </div>
         </section>
       )}
@@ -197,42 +212,22 @@ export default async function AboutPage() {
             </h2>
           </div>
           <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                <Heart className="h-7 w-7 text-primary" />
-              </div>
-              <h3 className="mt-4 font-semibold">Hospital Visits</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Supporting mothers in neonatal units with supplies and encouragement.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                <Home className="h-7 w-7 text-primary" />
-              </div>
-              <h3 className="mt-4 font-semibold">Home Visits</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Continuing care after discharge with guidance and resources.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                <Users className="h-7 w-7 text-primary" />
-              </div>
-              <h3 className="mt-4 font-semibold">Discipleship</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Nurturing spiritual growth through Bible study and mentorship.
-              </p>
-            </div>
-            <div className="rounded-2xl bg-white p-6 text-center shadow-sm">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                <Baby className="h-7 w-7 text-primary" />
-              </div>
-              <h3 className="mt-4 font-semibold">Outreaches</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Community events and awareness campaigns across Uganda.
-              </p>
-            </div>
+            {[
+              { icon: Heart, title: "Hospital Visits", text: "Supporting mothers in neonatal units with supplies and encouragement." },
+              { icon: Home, title: "Home Visits", text: "Continuing care after discharge with guidance and resources." },
+              { icon: Users, title: "Discipleship", text: "Nurturing spiritual growth through Bible study and mentorship." },
+              { icon: Baby, title: "Outreaches", text: "Community events and awareness campaigns across Uganda." },
+            ].map((item, i) => (
+              <FadeIn key={item.title} delay={i * 0.1} direction="up">
+                <div className="rounded-2xl bg-white p-6 text-center shadow-sm">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
+                    <item.icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="mt-4 font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
+                </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
       </section>
