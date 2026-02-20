@@ -6,6 +6,7 @@ import { getMamatuliaProgram, getMamtuliaProgramSlugs } from "@/services/content
 import { generateMetadata as genMeta } from "@/lib/seo/metadata";
 import type { MamatuliaProgram } from "@/types/contentful";
 import { CTABanner } from "@/components/brand";
+import { FadeIn } from "@/components/ui/fade-in";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { ArrowLeft } from "lucide-react";
 
@@ -61,62 +62,65 @@ export default async function ProgramDetailPage({ params }: PageProps) {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-[var(--brand-earth)] pt-20">
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[var(--brand-earth-dark)] via-[var(--brand-earth)] to-[var(--brand-tan)]/30" />
-        <div className="container relative z-10 mx-auto px-4 py-20 md:py-28">
-          <Link
-            href="/programs"
-            className="mb-6 inline-flex items-center text-sm text-white/70 hover:text-white"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            All Programs
-          </Link>
-          <p className="text-sm font-medium uppercase tracking-wider text-white/70">
-            {program.category}
-          </p>
-          <h1 className="mt-2 max-w-3xl font-serif text-4xl font-normal leading-tight text-white md:text-5xl lg:text-6xl">
-            {program.name}
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-white/80">
-            {program.summary}
-          </p>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 z-10">
-          <svg viewBox="0 0 1440 60" fill="none" className="w-full" preserveAspectRatio="none">
-            <path d="M0 60L1440 60L1440 30C1200 50 960 60 720 60C480 60 240 50 0 30L0 60Z" fill="white" />
-          </svg>
+      <section className="relative min-h-[70vh] bg-[var(--brand-ink)] pt-20">
+        {imageUrl ? (
+          <>
+            <Image
+              src={imageUrl}
+              alt={program.name}
+              fill
+              className="object-cover opacity-60"
+              priority
+              sizes="100vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-ink)] via-[var(--brand-ink-soft)] to-[var(--brand-ink-soft)]/60" />
+        )}
+        <div className="container relative z-10 mx-auto flex min-h-[70vh] flex-col justify-end px-4 pb-16 pt-32 md:justify-center md:pb-0 md:pt-20">
+          <div className="max-w-xl">
+            <FadeIn delay={0.05} direction="up">
+              <Link
+                href="/programs"
+                className="mb-6 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.15em] text-white/40 transition-colors hover:text-white/70"
+              >
+                <ArrowLeft className="h-3 w-3" />
+                All Programs
+              </Link>
+            </FadeIn>
+            <FadeIn delay={0.1} direction="up">
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-white/50">
+                {program.category}
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.2} direction="up">
+              <h1 className="mt-5 font-serif text-5xl font-light leading-[1.08] text-white md:text-6xl">
+                {program.name}
+              </h1>
+            </FadeIn>
+            <FadeIn delay={0.35} direction="up">
+              <p className="mt-6 max-w-sm text-base leading-relaxed text-white/60">
+                {program.summary}
+              </p>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* Image */}
-      {imageUrl && (
-        <section className="py-8 md:py-12">
-          <div className="container mx-auto px-4">
-            <div className="relative aspect-[16/7] overflow-hidden rounded-2xl">
-              <Image
-                src={imageUrl}
-                alt={program.name}
-                fill
-                className="object-cover"
-                sizes="100vw"
-                priority
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Content */}
       {paragraphs.length > 0 && (
-        <section className="py-12 md:py-20">
+        <section className="py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="mx-auto max-w-3xl">
-              <div className="space-y-6 text-lg leading-relaxed text-foreground/80">
-                {paragraphs.map((para, i) => (
-                  <p key={i}>{para}</p>
-                ))}
+            <FadeIn direction="up">
+              <div className="mx-auto max-w-3xl">
+                <div className="space-y-6 text-lg leading-relaxed text-foreground/80">
+                  {paragraphs.map((para, i) => (
+                    <p key={i}>{para}</p>
+                  ))}
+                </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
       )}
