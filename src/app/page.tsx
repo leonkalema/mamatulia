@@ -2,9 +2,7 @@ export const revalidate = 60;
 
 import Link from "next/link";
 import Image from "next/image";
-import { Heart, BookOpen, Home as HomeIcon, HandHeart, Briefcase } from "lucide-react";
 import { FadeIn } from "@/components/ui/fade-in";
-import type { LucideIcon } from "lucide-react";
 import { EXTERNAL_LINKS } from "@/constants/links";
 import { ImpactStat, ProgramCard, DonationModule, CTABanner } from "@/components/brand";
 import { getWpArticles, getMamatuliaPrograms, getMamatuliaPartners, getHomepageHero } from "@/services/contentful";
@@ -17,14 +15,6 @@ const impactStats = [
   { value: "11,500", label: "Mothers supported" },
   { value: "6,450", label: "Trainings delivered" },
 ] as const;
-
-const PROGRAM_ICONS: Record<string, LucideIcon> = {
-  "hospital-visits": Heart,
-  "home-visits": HomeIcon,
-  "discipleship-program": BookOpen,
-  "economic-development": Briefcase,
-  "outreaches": HandHeart,
-};
 
 const CARD_COLORS = [
   "bg-[var(--brand-ink-soft)]",
@@ -232,7 +222,6 @@ export default async function Home() {
                   title={program.name}
                   description={program.summary}
                   href={`/programs/${program.slug}`}
-                  icon={PROGRAM_ICONS[program.slug]}
                   imageUrl={getAssetUrl(program.image)}
                   color={CARD_COLORS[i % CARD_COLORS.length]}
                 />
